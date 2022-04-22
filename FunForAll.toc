@@ -1,0 +1,27 @@
+## Main function
+
+FFA_Main.lua
+
+## Buff
+FFA_Buff/Druid.lua
+FFA_Buff/Knight.lua
+FFA_Buff/Mage.lua
+FFA_Buff/Priest.lua
+FFA_Buff/Rogue.lua
+FFA_Buff/Scout.lua
+FFA_Buff/Warrior.lua
+
+## Burst
+FFA_Burst/Rogue.lua
+
+## Combo
+FFA_Combo/ForKnight.lua
+FFA_Combo/ForPriest.lua
+FFA_Combo/ForRogue.lua
+FFA_Combo/ForWarrior.lua
+
+## Other
+ForAll.lua
+
+## Test
+Test_FFA.lua
