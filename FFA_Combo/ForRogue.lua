@@ -172,8 +172,14 @@ function Z123()
 		UseSkill(1,1)
 end
 
-function zambakRK() 
+function zambakRB() 
 	local mana=UnitMana("player")
+	if FFA_SkillReady('Бросок') then 
+		CastSpellByName('Бросок')
+	end
+	if FFA_SkillReady('Комбо Бросок') then 
+		CastSpellByName('Комбо Бросок')
+	end
 	if ( mana > 34 and FFA_SkillReady('Атака в рану') and FFA_SearchDebuffTime('target', 'Тяжелое ранение') >= 1 and FFA_SearchDebuffTimeById('target', 620313) >= 1 
 		or (FFA_SearchDebuffTime('target', 'Кровотечение от удара исподтишка') >= 1) )  then
 		CastSpellByName('Атака в рану')
@@ -185,10 +191,74 @@ function zambakRK()
 	
 	if (mana > 29) then
 		CastSpellByName('Подлый удар')
+	end
+end
+
+
+function zambakRK() 
+	local mana=UnitMana("player")
+	if ( mana > 34 and FFA_SkillReady('Атака в рану') and FFA_SearchDebuffTime('target', 'Тяжелое ранение') >= 1 and FFA_SearchDebuffTimeById('target', 620313) >= 1 
+		or (FFA_SearchDebuffTime('target', 'Кровотечение от удара исподтишка') >= 1) )  then
+		CastSpellByName('Атака в рану')
+	end 
+
+	-- if (FFA_SkillReady('Разоружение')) then
+	-- 	CastSpellByName('Разоружение')
+	-- end
+
+	-- if FFA_SkillReady('Кара') and (chechKara() == true) then
+	-- 	CastSpellByName('Кара')
+	-- end
+
+	-- if (chechKara == false) then
+	-- 	CastSpellByName('Священный удар')
+	-- end
+
+	if(mana > 19 and FFA_SearchDebuffTimeById('target', 620313) <= 1 ) then 
+		CastSpellByName('Теневой удар')
+	end 
+	
+	if (mana > 29) then
+		CastSpellByName('Подлый удар')
 	else 
 		CastSpellByName('Священный удар')
 	end
 end
+ 
+function zambakSW() 
+	os = require('os')
+	SendChatMessage(os.time(os.date("!*t")), 'PARTY')
+	if (not FFA_SearchBuff('player', 'Захват цели')) then
+		CastSpellByName('Захват цели')
+	end
+
+	if (not FFA_SearchBuff('player', 'Боевое чутье')) then
+		CastSpellByName('Боевое чутье')
+	end
+
+	if (not FFA_SearchBuff('player', 'Бешенство')) then
+		CastSpellByName('Выстрел')
+	end
+
+	if (FFA_SearchDebuff('target', 'Эффект истощения маны') and FFA_SkillReady('Снайперский выстрел')) then
+		CastSpellByName('Снайперский выстрел')
+	end
+
+    -- истощения маны
+
+	if (GetActionUsable(5)) then 
+		CastSpellByName('Удар в сустав')
+	end
+
+	if (not FFA_SearchDebuff('target', 'Эффект истощения маны') and FFA_SkillReady('Выстрел истощения маны')) then
+		CastSpellByName('Выстрел истощения маны')
+	end
+
+	CastSpellByName('Стрелы ветра')
+
+
+end
+
 
 function zambakRKT() 
 	local mana=UnitMana("player")
@@ -269,19 +339,21 @@ function ZambakRW()
 	if (FFA_SearchBuff('player', 'Искажающий заряд') == false ) then
 		CastSpellByName('Искажающий заряд')
 	end
+	
+	if (FFA_SearchBuff('player', 'Извлечение души')) then  
+		if ( (FFA_SearchDebuffTimeById("target", 620313) > 1) and (FFA_SearchDebuffTime("target", "Тяжелое ранение") > 1) and (FFA_SkillReady('Атака в рану')) and (mana > 34) ) then
+			CastSpellByName('Атака в рану')
+		end
 
-	if (FFA_SkillReady('Пожиратель жизни') and FFA_SearchBuff('player', 'Извлечение души')) then 
-		CastSpellByName('Пожиратель жизни');
-
+		if (FFA_SkillReady('Пожиратель жизни')) then 
+			CastSpellByName('Пожиратель жизни');
+		end 
 	end
 
 	if (not FFA_SearchBuff('player', 'Извлечение души')) then 
 		CastSpellByName('Извлекатель душ');
 	end
 
-	if ( (FFA_SearchDebuffTimeById("target", 620313) > 1) and (FFA_SearchDebuffTime("target", "Тяжелое ранение") > 1) and (FFA_SkillReady('Атака в рану')) and (mana > 34) ) then
-		CastSpellByName('Атака в рану')
-	end
 
 	if (FFA_SearchDebuffTimeById("target", 620313) <= 1 and mana > 19) then
 		CastSpellByName('Теневой удар');
@@ -297,6 +369,10 @@ end
 function zambakSG() 
 	if (FFA_buffStack('Фатальный выстрел', 'player') < 4 and FFA_SkillReady('Фатальный выстрел')) then 
 		CastSpellByName('Фатальный выстрел');
+	end
+	
+	if (FFA_buffStack('Фатальный выстрел', 'player') >= 5 and FFA_SkillReady('Снайперский выстрел')) then 
+		CastSpellByName('Снайперский выстрел')
 	end
 
 	if (FFA_buffStack('Фатальный выстрел', 'player') >= 3 and FFA_SkillReady('Комбовыстрел')) then 
@@ -429,38 +505,27 @@ function cilarTM()
 
 	if (not FFA_SearchBuff('player', 'Область Священного Света')) then 
 		CastSpellByName('Область Священного Света');
-		DEFAULT_CHAT_FRAME:AddMessage('Область Священного Света')
 		else if (FFA_SkillReady('Взрыв священной силы')) then 
 			CastSpellByName('Взрыв священной силы');
-			DEFAULT_CHAT_FRAME:AddMessage('Взрыв священной силы')
 			else if (FFA_SkillReady('Священная печать') and not FFA_SearchDebuff('target', 'Священная печать 4')) then
 				CastSpellByName('Священная печать');
-				DEFAULT_CHAT_FRAME:AddMessage('Священная печать')
 				else if ((saveMode and FFA_SkillReady('Угроза')) or (not FFA_SearchBuff('player', 'Угроза'))) then
-					DEFAULT_CHAT_FRAME:AddMessage('Угроза')
 					saveMode = false;
 					CastSpellByName('Угроза');
 					else if (FFA_SearchBuff('player', 'Взрыв священной силы') and FFA_SkillReady('Удар щита правды')) then 
 						CastSpellByName('Удар щита правды')
-						DEFAULT_CHAT_FRAME:AddMessage('Удар щита правды')
 							else if (FFA_SkillReady('Вихревой щит')) then 
 								CastSpellByName('Вихревой щит');
-								DEFAULT_CHAT_FRAME:AddMessage('Вихревой щит')
 								else if (FFA_SuitSkillReady(klinokIndex)) then 
 									CastSpellByName('Священный клинок грома');
-									DEFAULT_CHAT_FRAME:AddMessage('Священный клинок грома')
 									else if (FFA_SuitSkillReady(mirmeksIndex)) then 
 										CastSpellByName('Серп Мирмекса');
-										DEFAULT_CHAT_FRAME:AddMessage('Серп Мирмекс')
 										else if (FFA_SkillReady('Военная молитва')) then 
 											CastSpellByName('Военная молитва');
-											DEFAULT_CHAT_FRAME:AddMessage('Военная молитва')
 												else if (not FFA_SearchDebuff('target', 'Разоружение IV') or FFA_SearchDebuffTime( 'target', 'Разоружение IV') < 4) then 
 														CastSpellByName('Разоружение');
-														DEFAULT_CHAT_FRAME:AddMessage('Разоружение')
 														else
 															CastSpellByName('Священный удар')
-															DEFAULT_CHAT_FRAME:AddMessage('Священный удар')														
 														end
 													end
 												end

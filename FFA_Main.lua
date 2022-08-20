@@ -148,7 +148,7 @@ end
 
 function FFA_Cooldown(a1,a2)
 	local cooldown, remaining = GetSkillCooldown(a1,a2)
-	if remaining <=  0.4 then
+	if remaining <=  1 then
 		return true
 	else
 		return false 
@@ -163,7 +163,7 @@ end
 
 function FFA_SuitSkillReady(index)
 	local name, texture, cooldown1, cooldown2 = SkillPlateUpdate(index);
-	return cooldown2 < 0.1;
+	return cooldown2 < 1;
 end
 
 function FFA_SkillReady(skillName)
