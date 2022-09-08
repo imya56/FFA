@@ -35,3 +35,12 @@ function Decahedral(var)
 		end
 	end
 end
+
+--/script StoreBuyItem1000(15,100)
+function StoreBuyItem1000(pos, count)
+	local i = 0
+	while i < 10 do
+		StoreBuyItem(pos, count);
+		i = i + 1
+	end
+end
