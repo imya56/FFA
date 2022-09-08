@@ -479,6 +479,86 @@ function zambakBS()
 end
 
 
+function zambakMWrlc() 
+	local value1, castSpeedAdditional = GetPlayerAbility('MAGIC_CASTSPEED') 
+
+	if (not FFA_SearchDebuff('target', 'Забытая черная магия')) then
+		CastSpellByName('Забытая черная магия')
+	end
+
+	
+	if (not FFA_SearchDebuff('target', 'Стихийная слабость')) then
+		CastSpellByName('Стихийная слабость')
+	end
+
+	if (not FFA_SearchBuff('player', 'Прилив энергии')) then
+		CastSpellByName('Прилив энергии')
+	end
+
+	if (not FFA_SearchBuff('player', 'Искажающий заряд')) then
+		CastSpellByName('Искажающий заряд')
+	end
+
+	if (not FFA_SearchBuff('player', 'Плазменный эффект')) then
+		if (FFA_SkillReady('Разряд')) then 
+			CastSpellByName('Разряд') 
+		else
+			if ((not FFA_buffStack('Гордость духа огня', 'player')) or (FFA_SearchDebuffTime('player', 'Гордость духа огня') > 4) ) then  
+				CastSpellByName('Электростатический взрыв')  
+			else
+				CastSpellByName('Электрическая стрела') 	
+			end
+		
+		end
+	end
+ 
+	if (FFA_buffStack('Гордость духа огня', 'player') < 2 or FFA_SearchBuffTime('player', 'Гордость духа огня') < 4) then 
+		CastSpellByName('Электростатический взрыв') 
+	end
+
+	if (FFA_buffStack('Гордость духа ветра', 'player') < 2 or FFA_SearchBuffTime('player', 'Гордость духа ветра') < 4) then 
+		CastSpellByName('Пламя')
+	end
+
+	if (FFA_buffStack('Гордость духа огня', 'player') >= 2 and castSpeedAdditional >= 75 ) then
+		CastSpellByName('Пламя')
+	end 
+	
+	-- if (FFA_buffStack('Гордость духа огня', 'player') >= 2 and FFA_SkillReady('Огненный шар')) then
+	-- 	CastSpellByName('Огненный шар')
+	-- end 
+
+	if (FFA_buffStack('Гордость духа ветра', 'player') >= 2) then
+		CastSpellByName('Электростатическое поле') 
+	end
+
+	
+end
+
+function zambakDW() 
+	if (FFA_buffStack('Сила Природы', 'player') < 18) then
+		CastSpellByName('Сосредоточен на природе')
+	end
+
+	if (not FFA_SearchDebuff('target','Семя слабости')) then
+		CastSpellByName('Семя слабости')
+	end
+
+	if (not FFA_SearchDebuff('target','Семя увядания')) then
+		CastSpellByName('Семя увядания')
+	end
+
+	if ((not FFA_SearchBuff('player', 'Искажающий заряд')) and FFA_SkillReady('Искажающий заряд')) then
+		CastSpellByName('Искажающий заряд')
+	end
+
+	if (FFA_debuffStack('Фатальный токсин', 'target') == 2) then
+		CastSpellByName('Яд природы')
+	else
+		CastSpellByName('Токсичная стрела')
+	end
+end
+
 function cilarTM() 
 	-- /script ReloadUI()
 
